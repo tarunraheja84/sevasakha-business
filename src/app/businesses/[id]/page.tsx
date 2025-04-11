@@ -41,7 +41,7 @@ export default async function BusinessPage({ params }: BusinessPageProps) {
         <div className="flex space-x-3">
           <Link
             href={`/businesses/${business.id}/edit`}
-            className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-dark"
+            className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-custom-theme focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-theme"
           >
             Edit Business
           </Link>
@@ -60,7 +60,7 @@ export default async function BusinessPage({ params }: BusinessPageProps) {
                 priority
               />
             ) : (
-              <div className="absolute inset-0 bg-primary-light flex items-center justify-center">
+              <div className="absolute inset-0 bg-custom-theme flex items-center justify-center">
                 <span className="text-white text-6xl font-bold">
                   {business.businessName.charAt(0)}
                 </span>
@@ -70,7 +70,7 @@ export default async function BusinessPage({ params }: BusinessPageProps) {
           
           <div className="md:col-span-2 p-6">
             <div className="flex flex-wrap gap-2 mb-4">
-              <span className="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-primary-light text-primary-dark">
+              <span className="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-custom-theme text-custom-theme">
                 {business.category}
               </span>
             </div>
@@ -108,7 +108,7 @@ export default async function BusinessPage({ params }: BusinessPageProps) {
                         href={business.googleLocation.startsWith('http') ? business.googleLocation : `https://maps.google.com/?q=${business.googleLocation}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-primary-dark hover:underline"
+                        className="text-custom-theme hover:underline"
                       >
                         View on Google Maps
                       </a>

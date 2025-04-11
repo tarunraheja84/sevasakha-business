@@ -27,13 +27,13 @@ export default function Header() {
   }, []);
   
   return (
-    <header className="bg-primary-light shadow-sm">
+    <header className="shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex">
             <div className="flex-shrink-0 flex items-center">
-              <Link href="/" className="text-primary-dark text-xl font-bold">
-                Business Directory
+              <Link href="/" className="text-custom-theme text-xl font-bold">
+                SevaSakha Business
               </Link>
             </div>
             <nav className="hidden sm:ml-6 sm:flex sm:space-x-8">
@@ -41,7 +41,7 @@ export default function Header() {
                 href="/"
                 className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
                   pathname === '/' 
-                    ? 'border-primary-dark text-gray-900' 
+                    ? 'border-custom-theme text-gray-900' 
                     : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
                 }`}
               >
@@ -51,18 +51,20 @@ export default function Header() {
                 href="/businesses"
                 className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
                   pathname === '/businesses' 
-                    ? 'border-primary-dark text-gray-900' 
+                    ? 'border-custom-theme text-gray-900' 
                     : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
                 }`}
               >
                 All Businesses
               </Link>
-              <div className="relative">
+
+              {/* All categories */}
+              <>
                 <button
                   type="button"
                   className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
                     pathname.includes('/categories') 
-                      ? 'border-primary-dark text-gray-900' 
+                      ? 'border-custom-theme text-gray-900' 
                       : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
                   }`}
                   onClick={() => setIsCategoriesOpen(!isCategoriesOpen)}
@@ -93,13 +95,13 @@ export default function Header() {
                     </div>
                   </div>
                 )}
-              </div>
+              </>
             </nav>
           </div>
           <div className="hidden sm:ml-6 sm:flex sm:items-center">
             <Link
               href="/create"
-              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-dark"
+              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-custom-theme hover:bg-hover-theme focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-theme"
             >
               Add Business
             </Link>
@@ -129,69 +131,79 @@ export default function Header() {
       {isMenuOpen && (
         <div className="sm:hidden">
           <div className="pt-2 pb-3 space-y-1">
+
             <Link
               href="/"
               className={`block pl-3 pr-4 py-2 border-l-4 text-base font-medium ${
                 pathname === '/'
-                  ? 'bg-primary-light border-primary-dark text-primary-dark'
+                  ? 'bg-custom-theme border-custom-theme text-custom-theme'
                   : 'border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700'
               }`}
               onClick={() => setIsMenuOpen(false)}
             >
               Home
             </Link>
+
+
             <Link
               href="/businesses"
               className={`block pl-3 pr-4 py-2 border-l-4 text-base font-medium ${
                 pathname === '/businesses'
-                  ? 'bg-primary-light border-primary-dark text-primary-dark'
+                  ? 'bg-custom-theme border-custom-theme text-custom-theme'
                   : 'border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700'
               }`}
               onClick={() => setIsMenuOpen(false)}
             >
               All Businesses
             </Link>
-            <button
-              type="button"
-              className={`w-full text-left block pl-3 pr-4 py-2 border-l-4 text-base font-medium ${
-                pathname.includes('/categories')
-                  ? 'bg-primary-light border-primary-dark text-primary-dark'
-                  : 'border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700'
-              }`}
-              onClick={() => setIsCategoriesOpen(!isCategoriesOpen)}
-            >
-              Categories
-            </button>
+
             
-            {isCategoriesOpen && (
-              <div className="pl-6 space-y-1">
-                {categories.length > 0 ? (
-                  categories.map((category) => (
-                    <Link
-                      key={category}
-                      href={`/categories/${encodeURIComponent(category)}`}
-                      className="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700"
-                      onClick={() => {
-                        setIsCategoriesOpen(false);
-                        setIsMenuOpen(false);
-                      }}
-                    >
-                      {category}
-                    </Link>
-                  ))
-                ) : (
-                  <div className="pl-3 pr-4 py-2 text-base text-gray-500">No categories found</div>
+            <span className="relative">
+                <button
+                  type="button"
+                  className={`w-full text-left block pl-3 pr-4 py-2 border-l-4 text-base font-medium ${
+                    pathname.includes('/categories')
+                      ? 'bg-custom-theme border-custom-theme text-custom-theme'
+                      : 'border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700'
+                  }`}
+                  onClick={() => setIsCategoriesOpen(!isCategoriesOpen)}
+                >
+                  Categories
+                </button>
+
+                
+                {isCategoriesOpen && (
+                  <div className="pl-6 space-y-1 absolute">
+                    {categories.length > 0 ? (
+                      categories.map((category) => (
+                        <Link
+                          key={category}
+                          href={`/categories/${encodeURIComponent(category)}`}
+                          className="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700"
+                          onClick={() => {
+                            setIsCategoriesOpen(false);
+                            setIsMenuOpen(false);
+                          }}
+                        >
+                          {category}
+                        </Link>
+                      ))
+                    ) : (
+                      <div className="pl-3 pr-4 py-2 text-base text-gray-500">No categories found</div>
+                    )}
+                  </div>
                 )}
-              </div>
-            )}
-            
+            </span>
+
             <Link
               href="/create"
-              className="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-primary-dark hover:bg-gray-50 hover:border-primary-light"
+              className="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-custom-theme hover:bg-gray-50 hover:border-hover-theme"
               onClick={() => setIsMenuOpen(false)}
             >
               Add Business
             </Link>
+
+
           </div>
         </div>
       )}

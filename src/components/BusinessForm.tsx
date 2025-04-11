@@ -157,8 +157,6 @@ export default function BusinessForm({ initialData, isEditing = false }: Busines
           },
           body: JSON.stringify(formData),
         });
-
-        console.log("res",res);
         
         if (!res.ok) {
           throw new Error('Failed to create business');
@@ -204,7 +202,7 @@ export default function BusinessForm({ initialData, isEditing = false }: Busines
                 <span className="text-gray-400">No image</span>
               )}
             </div>
-            <label className="cursor-pointer inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-dark">
+            <label className="cursor-pointer inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-custom-theme focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-theme">
               Upload Photo
               <input
                 type="file"
@@ -317,7 +315,7 @@ export default function BusinessForm({ initialData, isEditing = false }: Busines
             Images
           </label>
           <div className="mt-1">
-            <label className="cursor-pointer inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-dark">
+            <label className="cursor-pointer inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-custom-theme focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-theme">
               Upload Images
               <input
                 type="file"
@@ -362,7 +360,7 @@ export default function BusinessForm({ initialData, isEditing = false }: Busines
             Videos
           </label>
           <div className="mt-1">
-            <label className="cursor-pointer inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-dark">
+            <label className="cursor-pointer inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-custom-theme focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-theme">
               Upload Videos
               <input
                 type="file"
@@ -406,7 +404,7 @@ export default function BusinessForm({ initialData, isEditing = false }: Busines
         <button
           type="submit"
           disabled={isLoading}
-          className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-dark disabled:opacity-50"
+          className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary hover:bg-custom-theme focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-theme disabled:opacity-50"
         >
           {isLoading ? 'Processing...' : isEditing ? 'Update Business' : 'Create Business'}
         </button>

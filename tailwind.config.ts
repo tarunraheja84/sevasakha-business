@@ -9,12 +9,8 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        'primary-light': '#22C55E',
-        'primary-DEFAULT': '#22C55E',
-        'primary-dark': '#04df79',
-        'secondary-light':'#ef4444',
-        'secondary_DEFAULT':'#ef4444',
-        'secondary-dark':'#dc2626'
+        'custom-theme': '#04df79',
+        'hover-theme': '#66bb6a',
       },
     },
   },

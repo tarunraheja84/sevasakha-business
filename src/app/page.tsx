@@ -13,26 +13,26 @@ export default async function Home() {
   return (
     <div className="space-y-16">
       {/* Hero Section */}
-      <div className="bg-primary-light rounded-xl overflow-hidden shadow-lg">
+      <div className="bg-custom-theme rounded-xl overflow-hidden shadow-lg">
         <div className="px-8 py-16 sm:px-16 sm:py-24 lg:py-32 lg:px-24">
           <div className="text-center">
-            <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
+            <h1 className="text-4xl tracking-tight font-extrabold text-gray-800 sm:text-5xl md:text-6xl">
               <span className="block">Discover Local</span>
-              <span className="block text-primary-dark">Businesses</span>
+              <span className="block">Businesses</span>
             </h1>
-            <p className="mt-3 max-w-md mx-auto text-base text-gray-500 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
+            <p className="mt-3 max-w-md mx-auto text-base text-white sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
               Find and connect with the best local businesses in your area. Explore our directory to discover new services and products.
             </p>
             <div className="mt-10 flex justify-center">
               <Link
                 href="/businesses"
-                className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-dark"
+                className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-hover-theme hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-theme"
               >
                 Browse All Businesses
               </Link>
               <Link
                 href="/create"
-                className="ml-4 inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-primary-dark bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+                className="ml-4 inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-custom-theme bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
               >
                 Add Your Business
               </Link>
@@ -71,7 +71,7 @@ export default async function Home() {
                         priority
                       />
                     ) : (
-                      <div className="absolute inset-0 bg-primary-light flex items-center justify-center">
+                      <div className="absolute inset-0 bg-custom-theme flex items-center justify-center">
                         <span className="text-white text-xl font-bold">
                           {business.businessName.charAt(0)}
                         </span>
@@ -83,7 +83,7 @@ export default async function Home() {
                       {business.businessName}
                     </h3>
                     <div className="flex items-center mt-1">
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-light text-primary-dark">
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-custom-theme text-custom-theme">
                         {business.category}
                       </span>
                     </div>
@@ -99,7 +99,7 @@ export default async function Home() {
           <div className="mt-8 text-center">
             <Link
               href="/businesses"
-              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-primary-dark bg-primary-light hover:bg-primary-light/80 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-custom-theme bg-custom-theme hover:bg-custom-theme/80 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
             >
               View All Businesses
               <svg className="ml-2 -mr-1 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -129,7 +129,7 @@ export default async function Home() {
                 href={`/categories/${encodeURIComponent(category)}`}
                 className="bg-white rounded-lg shadow-sm p-6 text-center hover:shadow-md transition-shadow"
               >
-                <span className="text-primary-dark font-medium">{category}</span>
+                <span className="text-custom-theme font-medium">{category}</span>
               </Link>
             ))}
           </div>

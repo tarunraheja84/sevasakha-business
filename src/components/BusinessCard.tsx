@@ -21,7 +21,7 @@ export default function BusinessCard({ business }: BusinessCardProps) {
               priority
             />
           ) : (
-            <div className="absolute inset-0 bg-primary-light flex items-center justify-center">
+            <div className="absolute inset-0 bg-custom-theme flex items-center justify-center">
               <span className="text-white text-xl font-bold">
                 {business.businessName.charAt(0)}
               </span>
@@ -33,7 +33,7 @@ export default function BusinessCard({ business }: BusinessCardProps) {
             {business.businessName}
           </h3>
           <div className="flex items-center mt-1">
-            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-light text-primary-dark">
+            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-custom-theme text-custom-theme">
               {business.category}
             </span>
           </div>
