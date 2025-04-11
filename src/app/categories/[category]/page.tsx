@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
   const category = decodeURIComponent(params.category);
   
   return {
-    title: `${category} Businesses | Business Directory`,
+    title: `${category} Businesses | SevaSkaha Business`,
     description: `Browse businesses in the ${category} category`,
   };
 }

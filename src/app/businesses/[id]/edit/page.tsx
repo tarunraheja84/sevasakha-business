@@ -14,12 +14,12 @@ export async function generateMetadata({ params }: EditBusinessPageProps): Promi
   
   if (!business) {
     return {
-      title: 'Business Not Found | Business Directory'
+      title: 'Business Not Found | SevaSkaha Business'
     };
   }
   
   return {
-    title: `Edit ${business.businessName} | Business Directory`,
+    title: `Edit ${business.businessName} | SevaSkaha Business`,
   };
 }
 

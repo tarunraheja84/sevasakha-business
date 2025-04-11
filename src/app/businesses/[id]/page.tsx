@@ -15,12 +15,12 @@ export async function generateMetadata({ params }: BusinessPageProps): Promise<M
   
   if (!business) {
     return {
-      title: 'Business Not Found | Business Directory'
+      title: 'Business Not Found | SevasSakha Business'
     };
   }
   
   return {
-    title: `${business.businessName} | Business Directory`,
+    title: `${business.businessName} | SevaSkaha Business`,
     description: business.description || `Learn more about ${business.businessName}`,
   };
 }

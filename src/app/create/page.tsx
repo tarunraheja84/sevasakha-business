@@ -2,7 +2,7 @@ import BusinessForm from '@/components/BusinessForm';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Add Business | Business Directory',
+  title: 'Add Business | SevaSkaha Business',
   description: 'Add a new business to our directory',
 };
 
