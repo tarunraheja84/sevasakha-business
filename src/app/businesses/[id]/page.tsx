@@ -122,7 +122,7 @@ export default async function BusinessPage({ params }: BusinessPageProps) {
         
         {business.images.length > 0 && (
           <div className="px-6 pb-6">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">Gallery</h2>
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">Images</h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
               {business.images.map((image:any, index:any) => (
                 <div key={index} className="relative rounded-lg overflow-hidden h-40">

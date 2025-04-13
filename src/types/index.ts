@@ -12,8 +12,25 @@ export interface Business {
     createdAt: Date;
     updatedAt: Date;
   }
+
+  export interface BusinessWithFiles {
+    id: string;
+    profilePhoto: File;
+    businessName: string;
+    category: string;
+    address: string;
+    contactNo: string;
+    googleLocation: string;
+    description: string;
+    images: File[];
+    videos: File[];
+    createdAt: Date;
+    updatedAt: Date;
+  }
   
   export type BusinessFormData = Omit<Business, 'id' | 'createdAt' | 'updatedAt'>;
+
+  export type BusinessWithFilesFormData= Omit<BusinessWithFiles, 'id' | 'createdAt' | 'updatedAt'>;
   
   export interface ElasticsearchResponse {
     hits: {

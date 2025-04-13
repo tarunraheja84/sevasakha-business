@@ -2,11 +2,11 @@
 
 import { useState, useEffect, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
-import { Business, BusinessFormData } from '@/types';
+import { BusinessWithFiles, BusinessWithFilesFormData } from '@/types';
 import Image from 'next/image';
 
 interface BusinessFormProps {
-  initialData?: Business;
+  initialData?: BusinessWithFiles;
   isEditing?: boolean;
 }
 
@@ -15,9 +15,10 @@ export default function BusinessForm({ initialData, isEditing = false }: Busines
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   
-  const defaultFormData: BusinessFormData = {
-    profilePhoto: '',
+  const defaultFormData: BusinessWithFilesFormData = {
+    profilePhoto: new File([""], "profilePhoto.png", { type: "image/png" }),
     businessName: '',
     category: '',
     address: '',
@@ -28,7 +29,7 @@ export default function BusinessForm({ initialData, isEditing = false }: Busines
     videos: []
   };
   
-  const [formData, setFormData] = useState<BusinessFormData>(defaultFormData);
+  const [formData, setFormData] = useState<BusinessWithFilesFormData>(defaultFormData);
   
   // Load initial data if editing
   useEffect(() => {
@@ -46,7 +47,10 @@ export default function BusinessForm({ initialData, isEditing = false }: Busines
       });
       
       if (initialData.profilePhoto) {
-        setImagePreview(initialData.profilePhoto);
+        const url = typeof initialData.profilePhoto === 'string'
+        ? initialData.profilePhoto
+        : URL.createObjectURL(initialData.profilePhoto);
+        setImagePreview(url);
       }
     }
   }, [initialData]);
@@ -61,15 +65,8 @@ export default function BusinessForm({ initialData, isEditing = false }: Busines
   const handleProfilePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      // In a real app, you would upload this to a storage service
-      // For now, we'll use a data URL for the preview
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const result = reader.result as string;
-        setImagePreview(result);
-        setFormData(prev => ({ ...prev, profilePhoto: result }));
-      };
-      reader.readAsDataURL(file);
+      setFormData(prev => ({ ...prev, profilePhoto: file }));
+      setImagePreview(URL.createObjectURL(file));
     }
   };
   
@@ -77,18 +74,8 @@ export default function BusinessForm({ initialData, isEditing = false }: Busines
   const handleImagesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (files && files.length > 0) {
-      // Process multiple images
-      const newImages: string[] = [...formData.images];
-      
-      Array.from(files).forEach(file => {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          const result = reader.result as string;
-          newImages.push(result);
-          setFormData(prev => ({ ...prev, images: newImages }));
-        };
-        reader.readAsDataURL(file);
-      });
+      const fileArray = Array.from(files);
+      setFormData(prev => ({ ...prev, images: [...prev.images, ...fileArray] }));
     }
   };
   
@@ -96,26 +83,20 @@ export default function BusinessForm({ initialData, isEditing = false }: Busines
   const handleVideosChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (files && files.length > 0) {
-      // Process multiple videos
-      const newVideos: string[] = [...formData.videos];
-      
-      Array.from(files).forEach(file => {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          const result = reader.result as string;
-          newVideos.push(result);
-          setFormData(prev => ({ ...prev, videos: newVideos }));
-        };
-        reader.readAsDataURL(file);
-      });
+      const fileArray = Array.from(files);
+      setFormData(prev => ({ ...prev, videos: [...prev.videos, ...fileArray] }));
     }
   };
   
   // Remove an image from the list
   const removeImage = (index: number) => {
-    const newImages = [...formData.images];
-    newImages.splice(index, 1);
-    setFormData(prev => ({ ...prev, images: newImages }));
+    const updatedImages = [...formData.images];
+    const updatedPreviews = [...imagePreviews];
+    updatedImages.splice(index, 1);
+    updatedPreviews.splice(index, 1);
+  
+    setFormData(prev => ({ ...prev, images: updatedImages }));
+    setImagePreviews(updatedPreviews);
   };
   
   // Remove a video from the list
@@ -130,16 +111,36 @@ export default function BusinessForm({ initialData, isEditing = false }: Busines
     e.preventDefault();
     setIsLoading(true);
     setError(null);
+
+    const finalFormData = new FormData();
     
+    finalFormData.append("profilePhoto",formData.profilePhoto);
+    finalFormData.append("businessName",formData.businessName);
+    finalFormData.append("category",formData.category);
+    finalFormData.append("address",formData.address);
+    finalFormData.append("contactNo",formData.contactNo);
+    finalFormData.append("googleLocation",formData.googleLocation);
+    finalFormData.append("description",formData.description);
+    
+    // Append multiple files (images and videos)
+    if (formData.images && Array.isArray(formData.images)) {
+      formData.images.forEach((image, index) => {
+        finalFormData.append("images", image, `image-${index}`);
+      });
+    }
+
+    if (formData.videos && Array.isArray(formData.videos)) {
+      formData.videos.forEach((video, index) => {
+        finalFormData.append("videos", video, `video-${index}`);
+      });
+    }
+
     try {
       if (isEditing && initialData) {
         // Update existing business
         const res = await fetch(`/api/businesses/${initialData.id}`, {
           method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(formData),
+          body: finalFormData,
         });
         
         if (!res.ok) {
@@ -152,10 +153,7 @@ export default function BusinessForm({ initialData, isEditing = false }: Busines
         // Create new business
         const res = await fetch('/api/businesses', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(formData),
+          body: finalFormData,
         });
         
         if (!res.ok) {
@@ -311,42 +309,31 @@ export default function BusinessForm({ initialData, isEditing = false }: Busines
         
         {/* Images */}
         <div>
-          <label className="block text-sm font-medium text-gray-700">
-            Images
-          </label>
-          <div className="mt-1">
-            <label className="cursor-pointer inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-custom-theme focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-theme">
-              Upload Images
-              <input
-                type="file"
-                name="images"
-                accept="image/*"
-                multiple
-                onChange={handleImagesChange}
-                className="sr-only"
-              />
-            </label>
-          </div>
+          <label className="block text-sm font-medium text-gray-700">Images</label>
+          <input
+            type="file"
+            accept="image/*"
+            multiple
+            onChange={handleImagesChange}
+            className="mt-1 block w-full text-sm text-gray-500"
+          />
+          
           {formData.images.length > 0 && (
-            <div className="grid grid-cols-3 gap-4 mt-2">
-              {formData.images.map((image, index) => (
-                <div key={index} className="relative">
-                  <div className="w-full h-24 rounded-md overflow-hidden">
-                    <Image
-                      src={image}
-                      alt={`Business Image ${index + 1}`}
-                      className="object-cover"
-                      fill
-                    />
-                  </div>
+            <div className="flex flex-wrap gap-4 mt-4">
+              {formData.images.map((img, index) => (
+                <div key={index} className="relative w-32 h-32 border rounded-md overflow-hidden">
+                  <Image
+                    src={URL.createObjectURL(img)}
+                    alt={`Preview ${index}`}
+                    fill
+                    className="object-cover"
+                  />
                   <button
                     type="button"
                     onClick={() => removeImage(index)}
-                    className="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1 transform translate-x-1 -translate-y-1"
+                    className="absolute top-1 right-1 bg-white text-red-500 rounded-full p-1 shadow"
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
+                    ✕
                   </button>
                 </div>
               ))}
