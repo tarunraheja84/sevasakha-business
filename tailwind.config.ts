@@ -10,7 +10,7 @@ const config: Config = {
     extend: {
       colors: {
         'custom-theme': '#04df79',
-        'hover-theme': '#66bb6a',
+        'hover-theme': '#4caf50',
       },
     },
   },

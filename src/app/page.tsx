@@ -26,7 +26,7 @@ export default async function Home() {
             <div className="mt-10 flex justify-center">
               <Link
                 href="/businesses"
-                className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-hover-theme hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-theme"
+                className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-hover-theme hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-theme"
               >
                 Browse All Businesses
               </Link>
@@ -83,7 +83,7 @@ export default async function Home() {
                       {business.businessName}
                     </h3>
                     <div className="flex items-center mt-1">
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-custom-theme text-custom-theme">
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-custom-theme text-white">
                         {business.category}
                       </span>
                     </div>
@@ -99,7 +99,7 @@ export default async function Home() {
           <div className="mt-8 text-center">
             <Link
               href="/businesses"
-              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-custom-theme bg-custom-theme hover:bg-custom-theme/80 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-custom-theme hover:bg-custom-theme/80 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
             >
               View All Businesses
               <svg className="ml-2 -mr-1 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
