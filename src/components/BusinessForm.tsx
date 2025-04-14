@@ -18,7 +18,9 @@ export default function BusinessForm({ initialData, isEditing = false }: Busines
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   
   const defaultFormData: BusinessWithFilesFormData = {
-    profilePhoto: new File([""], "profilePhoto.png", { type: "image/png" }),
+    profilePhoto: typeof window !== 'undefined'
+    ? new File([""], "profilePhoto.png", { type: "image/png" })
+    : (null as unknown as File),
     businessName: '',
     category: '',
     address: '',
