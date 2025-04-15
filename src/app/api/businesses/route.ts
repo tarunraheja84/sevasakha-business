@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { BusinessWithFilesFormData } from '@/types';
 import { createBusiness, getAllBusinesses } from '@/lib/db';
 
 export async function GET() {
