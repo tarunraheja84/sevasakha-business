@@ -33,7 +33,7 @@ export default function Header() {
           <div className="flex">
             <div className="flex-shrink-0 flex items-center">
               <Link href="/" className="text-custom-theme text-xl font-bold">
-                SevaSakha Business
+                SevaSakha
               </Link>
             </div>
             <nav className="hidden sm:ml-6 sm:flex sm:space-x-8">

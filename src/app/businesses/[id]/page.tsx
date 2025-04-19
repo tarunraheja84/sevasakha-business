@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: BusinessPageProps): Promise<M
   
   if (!business) {
     return {
-      title: 'Business Not Found | SevasSakha Business'
+      title: 'Business Not Found | SevaSakha'
     };
   }
   
@@ -41,7 +41,7 @@ export default async function BusinessPage({ params }: BusinessPageProps) {
         <div className="flex space-x-3">
           <Link
             href={`/businesses/${business.id}/edit`}
-            className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-custom-theme focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-theme"
+            className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary bg-custom-theme hover:bg-hover-theme focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-theme"
           >
             Edit Business
           </Link>
@@ -70,7 +70,7 @@ export default async function BusinessPage({ params }: BusinessPageProps) {
           
           <div className="md:col-span-2 p-6">
             <div className="flex flex-wrap gap-2 mb-4">
-              <span className="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-custom-theme text-custom-theme">
+              <span className="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-custom-theme text-white">
                 {business.category}
               </span>
             </div>

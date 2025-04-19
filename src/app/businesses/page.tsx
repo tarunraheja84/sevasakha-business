@@ -4,7 +4,7 @@ import BusinessList from '@/components/BusinessList';
 import { getAllBusinesses } from '@/lib/db';
 
 export const metadata: Metadata = {
-  title: 'All Businesses | SevaSakha Business',
+  title: 'All Businesses | SevaSakha',
   description: 'Browse all businesses in our directory',
 };
 

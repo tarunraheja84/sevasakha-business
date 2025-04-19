@@ -70,6 +70,7 @@ export async function PUT(
     };
 
     // Update the business with the new data
+    console.log(updatedBusinessData);
     const updatedBusiness = await updateBusiness(id, updatedBusinessData);
 
     return NextResponse.json(updatedBusiness);

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
-import { BusinessWithFiles, BusinessWithFilesFormData } from '@/types';
+import { BusinessFormData, BusinessWithFiles, BusinessWithFilesFormData } from '@/types';
 import Image from 'next/image';
 
 interface BusinessFormProps {
@@ -30,6 +30,7 @@ export default function BusinessForm({ initialData, isEditing = false }: Busines
     images: [],
     videos: []
   };
+
   
   const [formData, setFormData] = useState<BusinessWithFilesFormData>(defaultFormData);
   
@@ -75,20 +76,21 @@ export default function BusinessForm({ initialData, isEditing = false }: Busines
   // Handle images upload
   const handleImagesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
-    if (files && files.length > 0) {
+      if (files && files.length > 0) {
       const fileArray = Array.from(files);
       setFormData(prev => ({ ...prev, images: [...prev.images, ...fileArray] }));
     }
   };
-  
+
   // Handle videos upload
   const handleVideosChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
-    if (files && files.length > 0) {
+      if (files && files.length > 0) {
       const fileArray = Array.from(files);
       setFormData(prev => ({ ...prev, videos: [...prev.videos, ...fileArray] }));
     }
   };
+
   
   // Remove an image from the list
   const removeImage = (index: number) => {
@@ -124,16 +126,25 @@ export default function BusinessForm({ initialData, isEditing = false }: Busines
     finalFormData.append("googleLocation",formData.googleLocation);
     finalFormData.append("description",formData.description);
     
-    // Append multiple files (images and videos)
+    // Append images
     if (formData.images && Array.isArray(formData.images)) {
       formData.images.forEach((image, index) => {
-        finalFormData.append("images", image, `image-${index}`);
+        if (image instanceof File) {
+          finalFormData.append("images", image, `image-${index}`);
+        } else {
+          finalFormData.append("imageUrls", image); // send URLs under a different key (e.g., "imageUrls")
+        }
       });
     }
 
+    // Append videos
     if (formData.videos && Array.isArray(formData.videos)) {
       formData.videos.forEach((video, index) => {
-        finalFormData.append("videos", video, `video-${index}`);
+        if (video instanceof File) {
+          finalFormData.append("videos", video, `video-${index}`);
+        } else {
+          finalFormData.append("videoUrls", video); // send URLs under a different key (e.g., "videoUrls")
+        }
       });
     }
 
@@ -227,26 +238,35 @@ export default function BusinessForm({ initialData, isEditing = false }: Busines
             value={formData.businessName}
             onChange={handleChange}
             required
-            className="px-2 py-1 mt-1 block w-full rounded-md shadow-sm text-sm"
+            className="px-2 py-1 mt-1 block w-full rounded-md shadow-sm text-sm bg-gray-100"
           />
         </div>
         
         {/* Category */}
-        <div>
-          <label htmlFor="category" className="block text-sm font-medium text-gray-700">
-            Category *
-          </label>
-          <input
-            type="text"
-            id="category"
-            name="category"
-            value={formData.category}
-            onChange={handleChange}
-            required
-            placeholder="e.g., Restaurant, Retail, Service"
-            className="px-2 py-1 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm"
-          />
-        </div>
+      <div>
+        <label htmlFor="category" className="block text-sm font-medium text-gray-700">
+          Category *
+        </label>
+        <select
+          id="category"
+          name="category"
+          value={formData.category}
+          onChange={handleChange}
+          required
+          className="px-2 py-1 mt-1 block w-full bg-gray-100 border border-gray-400 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm"
+        >
+          <option value="">Select a category</option>
+          <option value="Home Services">Home Services</option>
+          <option value="Personal Care & Wellness">Personal Care & Wellness</option>
+          <option value="Events & Celebrations">Events & Celebrations</option>
+          <option value="Religious & Cultural">Religious & Cultural</option>
+          <option value="Transportation & Travel">Transportation & Travel</option>
+          <option value="Education & Coaching">Education & Coaching</option>
+          <option value="Repair & Maintenance">Repair & Maintenance</option>
+          <option value="Business">Business</option>
+          <option value="Others / Miscellaneous">Others / Miscellaneous</option>
+        </select>
+      </div>
         
         {/* Address */}
         <div>
@@ -259,7 +279,7 @@ export default function BusinessForm({ initialData, isEditing = false }: Busines
             name="address"
             value={formData.address}
             onChange={handleChange}
-            className="px-2 py-1 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm"
+            className="px-2 py-1 mt-1 block w-full bg-gray-100 border-gray-400 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm"
           />
         </div>
         
@@ -274,7 +294,7 @@ export default function BusinessForm({ initialData, isEditing = false }: Busines
             name="contactNo"
             value={formData.contactNo}
             onChange={handleChange}
-            className="px-2 py-1 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm"
+            className="px-2 py-1 mt-1 block w-full bg-gray-100 border-gray-400 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm"
           />
         </div>
         
@@ -290,7 +310,7 @@ export default function BusinessForm({ initialData, isEditing = false }: Busines
             value={formData.googleLocation}
             onChange={handleChange}
             placeholder="e.g., https://maps.google.com/?q=... or 40.7128,-74.0060"
-            className="px-2 py-1 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm"
+            className="px-2 py-1 mt-1 block w-full bg-gray-100 border-gray-400 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm"
           />
         </div>
         
@@ -305,7 +325,7 @@ export default function BusinessForm({ initialData, isEditing = false }: Busines
             value={formData.description}
             onChange={handleChange}
             rows={4}
-            className="px-2 py-1 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm"
+            className="px-2 py-1 mt-1 block w-full bg-gray-100 border-gray-400 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm"
           />
         </div>
         
@@ -331,7 +351,7 @@ export default function BusinessForm({ initialData, isEditing = false }: Busines
               {formData.images.map((img, index) => (
                 <div key={index} className="relative w-32 h-32 border rounded-md overflow-hidden">
                   <Image
-                    src={URL.createObjectURL(img)}
+                    src={img instanceof File ? URL.createObjectURL(img): img}
                     alt={`Preview ${index}`}
                     fill
                     className="object-cover"

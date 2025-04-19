@@ -46,6 +46,16 @@ async function uploadToS3(file: File): Promise<string> {
   return uploadResult.Location;
 }
 
+// Delete helper
+export async function deleteFromS3(fileUrl: string) {
+  const { pathname, hostname } = new URL(fileUrl);
+
+  const Bucket = hostname.split('.')[0]; // if your bucket is in the subdomain
+  const Key = decodeURIComponent(pathname.slice(1)); // remove leading slash
+
+  return s3.deleteObject({ Bucket, Key }).promise();
+}
+
 // Create a business
 export async function createBusiness(business: {
   profilePhoto: File;
@@ -134,28 +144,32 @@ export async function updateBusiness(
   };
 
   // Handle profilePhoto
-  if (updates.profilePhoto instanceof File) {
-    const profilePhotoUrl = await uploadToS3(updates.profilePhoto);
-    updatePayload.profilePhoto = profilePhotoUrl;
+  if (updates.profilePhoto) {
+    updatePayload.profilePhoto =
+      updates.profilePhoto instanceof File
+        ? await uploadToS3(updates.profilePhoto)
+        : updates.profilePhoto;
   }
 
-  // Handle images (only if passed)
+  // Handle images
   if (Array.isArray(updates.images)) {
-    const imageUrls = await Promise.all(updates.images.map(file =>
-      file instanceof File ? uploadToS3(file) : Promise.resolve(file)
-    ));
-    updatePayload.images = imageUrls;
+    updatePayload.images = await Promise.all(
+      updates.images.map(item =>
+        item instanceof File ? uploadToS3(item) : item
+      )
+    );
   }
 
-  // Handle videos (only if passed)
+  // Handle videos
   if (Array.isArray(updates.videos)) {
-    const videoUrls = await Promise.all(updates.videos.map(file =>
-      file instanceof File ? uploadToS3(file) : Promise.resolve(file)
-    ));
-    updatePayload.videos = videoUrls;
+    updatePayload.videos = await Promise.all(
+      updates.videos.map(item =>
+        item instanceof File ? uploadToS3(item) : item
+      )
+    );
   }
 
-  // Handle other fields
+  // Other text fields
   const otherFields = [
     'businessName',
     'category',
@@ -171,12 +185,30 @@ export async function updateBusiness(
     }
   }
 
+  // Update in DB and return updated business
   await BusinessModel.findByIdAndUpdate(id, updatePayload);
   return getBusinessById(id);
 }
 
+
 // Delete a business
 export async function deleteBusiness(id: string) {
+  const business = await BusinessModel.findById(id).lean();
+  if (!business) return null;
+
+  const { profilePhoto, images, videos }:any = business;
+
+  const deletePromises = [];
+
+  if (profilePhoto) deletePromises.push(deleteFromS3(profilePhoto));
+  if (Array.isArray(images)) {
+    deletePromises.push(...images.map(deleteFromS3));
+  }
+  if (Array.isArray(videos)) {
+    deletePromises.push(...videos.map(deleteFromS3));
+  }
+
+  await Promise.allSettled(deletePromises);
   return BusinessModel.findByIdAndDelete(id);
 }
 

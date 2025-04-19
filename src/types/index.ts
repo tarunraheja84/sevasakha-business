@@ -22,8 +22,8 @@ export interface Business {
     contactNo: string;
     googleLocation: string;
     description: string;
-    images: File[];
-    videos: File[];
+    images: any[];
+    videos: any[];
     createdAt: Date;
     updatedAt: Date;
   }
