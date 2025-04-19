@@ -202,7 +202,7 @@ export default function BusinessForm({ initialData, isEditing = false }: Busines
                 <span className="text-gray-400">No image</span>
               )}
             </div>
-            <label className="cursor-pointer inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-custom-theme focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-theme">
+            <label className="cursor-pointer inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-custom-theme hover:bg-hover-theme focus:outline-none focus:ring-2 focus:ring-offset-2">
               Upload Photo
               <input
                 type="file"
@@ -227,7 +227,7 @@ export default function BusinessForm({ initialData, isEditing = false }: Busines
             value={formData.businessName}
             onChange={handleChange}
             required
-            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm"
+            className="px-2 py-1 mt-1 block w-full rounded-md shadow-sm text-sm"
           />
         </div>
         
@@ -244,7 +244,7 @@ export default function BusinessForm({ initialData, isEditing = false }: Busines
             onChange={handleChange}
             required
             placeholder="e.g., Restaurant, Retail, Service"
-            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm"
+            className="px-2 py-1 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm"
           />
         </div>
         
@@ -259,7 +259,7 @@ export default function BusinessForm({ initialData, isEditing = false }: Busines
             name="address"
             value={formData.address}
             onChange={handleChange}
-            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm"
+            className="px-2 py-1 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm"
           />
         </div>
         
@@ -274,7 +274,7 @@ export default function BusinessForm({ initialData, isEditing = false }: Busines
             name="contactNo"
             value={formData.contactNo}
             onChange={handleChange}
-            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm"
+            className="px-2 py-1 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm"
           />
         </div>
         
@@ -290,7 +290,7 @@ export default function BusinessForm({ initialData, isEditing = false }: Busines
             value={formData.googleLocation}
             onChange={handleChange}
             placeholder="e.g., https://maps.google.com/?q=... or 40.7128,-74.0060"
-            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm"
+            className="px-2 py-1 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm"
           />
         </div>
         
@@ -305,20 +305,26 @@ export default function BusinessForm({ initialData, isEditing = false }: Busines
             value={formData.description}
             onChange={handleChange}
             rows={4}
-            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm"
+            className="px-2 py-1 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm"
           />
         </div>
         
         {/* Images */}
         <div>
           <label className="block text-sm font-medium text-gray-700">Images</label>
-          <input
-            type="file"
-            accept="image/*"
-            multiple
-            onChange={handleImagesChange}
-            className="mt-1 block w-full text-sm text-gray-500"
-          />
+          <div className="mt-1">
+            <label className="cursor-pointer inline-flex items-center px-2 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary bg-custom-theme hover:bg-hover-theme focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-theme">
+              Upload Images
+              <input
+                type="file"
+                name="images"
+                accept="image/*"
+                multiple
+                onChange={handleImagesChange}
+                className="sr-only"
+              />
+            </label>
+          </div>
           
           {formData.images.length > 0 && (
             <div className="flex flex-wrap gap-4 mt-4">
@@ -349,7 +355,7 @@ export default function BusinessForm({ initialData, isEditing = false }: Busines
             Videos
           </label>
           <div className="mt-1">
-            <label className="cursor-pointer inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-custom-theme focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-theme">
+            <label className="cursor-pointer inline-flex items-center px-2 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary bg-custom-theme hover:bg-hover-theme focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-theme">
               Upload Videos
               <input
                 type="file"
@@ -393,7 +399,7 @@ export default function BusinessForm({ initialData, isEditing = false }: Busines
         <button
           type="submit"
           disabled={isLoading}
-          className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary hover:bg-custom-theme focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-theme disabled:opacity-50"
+          className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-custom-theme hover:bg-custom-theme focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-theme disabled:opacity-50"
         >
           {isLoading ? 'Processing...' : isEditing ? 'Update Business' : 'Create Business'}
         </button>
