@@ -73,7 +73,7 @@ export default function Header() {
                 </button>
 
                 {isCategoriesOpen && (
-                  <div className="absolute w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-10 h-28 overflow-y-auto">
+                  <div className="absolute w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-10 h-64 overflow-y-auto">
                     <div className="py-1">
                       {categories.length > 0 ? (
                         categories.map((category) => (
