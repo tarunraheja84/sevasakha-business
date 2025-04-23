@@ -26,7 +26,7 @@ services:
 
   nextjs-app:
     build:
-      context: ./sevasakha
+      context: ./
     environment:
       - VIRTUAL_HOST=sevasakha.com
       - LETSENCRYPT_HOST=sevasakha.com
