@@ -31,7 +31,6 @@ export default function BusinessList({ initialBusinesses = [], category }: Busin
           }
           
           const data = await res.json();
-          console.log("data", data);
           setBusinesses(data);
         } catch (err) {
           console.error('Error fetching businesses:', err);

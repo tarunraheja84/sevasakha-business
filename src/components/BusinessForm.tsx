@@ -153,8 +153,7 @@ export default function BusinessForm({ initialData, isEditing = false }: Busines
         // Update existing business
         const res = await fetch(`/api/businesses/${initialData.id}`, {
           method: 'PUT',
-          body: finalFormData,
-          cache:'no-store'
+          body: finalFormData
         });
         
         if (!res.ok) {
@@ -167,8 +166,7 @@ export default function BusinessForm({ initialData, isEditing = false }: Busines
         // Create new business
         const res = await fetch('/api/businesses', {
           method: 'POST',
-          body: finalFormData,
-          cache:'no-store'
+          body: finalFormData
         });
         
         if (!res.ok) {
