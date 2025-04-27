@@ -126,12 +126,14 @@ export default async function BusinessPage({ params }: BusinessPageProps) {
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
               {business.images.map((image:any, index:any) => (
                 <div key={index} className="relative rounded-lg overflow-hidden h-40">
+                  <a href={image} target="_self" rel="noopener noreferrer">
                   <Image
                     src={image}
                     alt={`${business.businessName} image ${index + 1}`}
                     className="object-cover"
                     fill
                   />
+                  </a>
                 </div>
               ))}
             </div>
