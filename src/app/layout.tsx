@@ -20,9 +20,9 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <link rel="icon" href="https://www.sevasakha.com/sevasakha.png" />
-         {/* Google Analytics Script Tag Loader */}
-         <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-7DBNFHTX59"
+        {/* Google Analytics Tag */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-WLTBEEQESC"
           strategy="afterInteractive"
         />
         <Script id="google-analytics" strategy="afterInteractive">
@@ -30,7 +30,7 @@ export default function RootLayout({
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', 'G-7DBNFHTX59');
+            gtag('config', 'G-WLTBEEQESC');
           `}
         </Script>
       </head>
