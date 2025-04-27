@@ -20,6 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <link rel="icon" href="https://www.sevasakha.com/sevasakha.png" />
+
         {/* Google Analytics Tag */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-WLTBEEQESC"
@@ -31,6 +32,18 @@ export default function RootLayout({
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', 'G-WLTBEEQESC');
+          `}
+        </Script>
+
+        {/* Organization Schema for SEO */}
+        <Script id="organization-schema" type="application/ld+json" strategy="afterInteractive">
+          {`
+            {
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "url": "https://www.sevasakha.com",
+              "logo": "https://www.sevasakha.com/sevasakha.png"
+            }
           `}
         </Script>
       </head>
