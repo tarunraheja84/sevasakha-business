@@ -50,8 +50,9 @@ export default async function BusinessPage({ params }: BusinessPageProps) {
       
       <div className="bg-white shadow-md rounded-lg overflow-hidden">
         <div className="grid grid-cols-1 md:grid-cols-3">
-          <div className="md:col-span-1 relative h-72 md:h-full min-h-[300px]">
+          <div className="cursor-pointer md:col-span-1 relative h-72 md:h-full min-h-[300px]">
             {business.profilePhoto ? (
+              <a href={business.profilePhoto} target="_self" rel="noopener noreferrer">
               <Image
                 src={business.profilePhoto}
                 alt={business.businessName}
@@ -59,6 +60,7 @@ export default async function BusinessPage({ params }: BusinessPageProps) {
                 fill
                 priority
               />
+              </a>
             ) : (
               <div className="absolute inset-0 bg-custom-theme flex items-center justify-center">
                 <span className="text-white text-6xl font-bold">
@@ -123,7 +125,7 @@ export default async function BusinessPage({ params }: BusinessPageProps) {
         {business.images.length > 0 && (
           <div className="px-6 pb-6">
             <h2 className="text-lg font-semibold text-gray-900 mb-4">Images</h2>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+            <div className="cursor-pointer grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
               {business.images.map((image:any, index:any) => (
                 <div key={index} className="relative rounded-lg overflow-hidden h-40">
                   <a href={image} target="_self" rel="noopener noreferrer">
