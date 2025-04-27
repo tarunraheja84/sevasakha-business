@@ -150,9 +150,9 @@ export default function BusinessForm({ initialData, isEditing = false }: Busines
     
     // Append images
     if (formData.images && Array.isArray(formData.images)) {
-      formData.images.forEach((image) => {
+      formData.images.forEach((image,index) => {
         if (image instanceof File) {
-          finalFormData.append("images", image, image.name); // Use the original name of the file
+          finalFormData.append("images", image, `image-${index}`);
         } else {
           finalFormData.append("imageUrls", image); // send URLs under a different key (e.g., "imageUrls")
         }
@@ -161,9 +161,9 @@ export default function BusinessForm({ initialData, isEditing = false }: Busines
 
     // Append videos
     if (formData.videos && Array.isArray(formData.videos)) {
-      formData.videos.forEach((video) => {
+      formData.videos.forEach((video,index) => {
         if (video instanceof File) {
-          finalFormData.append("videos", video, video.name); // Use the original name of the file
+          finalFormData.append("videos", video, `video-${index}`); // Use the original name of the file
         } else {
           finalFormData.append("videoUrls", video); // send URLs under a different key (e.g., "videoUrls")
         }
