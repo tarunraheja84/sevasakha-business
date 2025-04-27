@@ -13,10 +13,7 @@ export default function Header() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await fetch('/api/categories',{
-          cache:'no-store'
-        }
-        );
+        const res = await fetch('/api/categories');
         if (res.ok) {
           const data = await res.json();
           setCategories(data);

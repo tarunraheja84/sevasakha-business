@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/sevasakha.png" />
       </head>
       <body className={`${inter.className} bg-gray-50 min-h-screen`}>
         <Header />

@@ -22,9 +22,7 @@ export default function BusinessList({ initialBusinesses = [], category }: Busin
             ? `/api/categories/${encodeURIComponent(category)}/businesses` 
             : '/api/businesses';
             
-          const res = await fetch(url,{
-            cache:'no-store'
-          });
+          const res = await fetch(url);
           
           if (!res.ok) {
             throw new Error('Failed to fetch businesses');
