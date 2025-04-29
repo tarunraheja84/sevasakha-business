@@ -11,7 +11,6 @@ export const metadata: Metadata = {
 export default async function BusinessesPage() {
   const businesses = await getAllBusinesses();
   
-  console.log("businesses",businesses);
   return (
     <div>
       <div className="pb-5 border-b border-gray-200 sm:flex sm:items-center sm:justify-between">
