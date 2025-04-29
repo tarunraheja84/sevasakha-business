@@ -15,7 +15,6 @@ export default function BusinessList({ initialBusinesses = [], category }: Busin
   const [error, setError] = useState<string | null>(null);
   
   useEffect(() => {
-    // if (!initialBusinesses.length) {
       const fetchBusinesses = async () => {
         try {
           const url = category 
@@ -39,10 +38,6 @@ export default function BusinessList({ initialBusinesses = [], category }: Busin
       };
       
       fetchBusinesses();
-    // } else {
-    //   setBusinesses(initialBusinesses);
-    //   setIsLoading(false);
-    // }
   }, [initialBusinesses, category]);
   
   if (isLoading) {
