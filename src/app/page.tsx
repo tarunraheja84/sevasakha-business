@@ -1,15 +1,13 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { getAllBusinesses, getAllCategories } from '@/lib/db';
+import { getLastThreeUpdatedBusinesses, getAllCategories } from '@/lib/db';
 
 export default async function Home() {
-  const [businesses, categories] = await Promise.all([
-    getAllBusinesses(),
+  const [featuredBusinesses, categories] = await Promise.all([
+    getLastThreeUpdatedBusinesses(),
     getAllCategories()
   ]);
-  
-  const featuredBusinesses = businesses.slice(0, 3);
-  
+    
   return (
     <div className="space-y-16">
       {/* Hero Section */}

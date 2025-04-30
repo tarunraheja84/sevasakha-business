@@ -106,6 +106,19 @@ export async function getAllBusinesses() {
   }));
 }
 
+// Get last 3 updated businesses
+export async function getLastThreeUpdatedBusinesses() {
+  const businesses = await BusinessModel.find()
+    .sort({ updatedAt: -1 }) 
+    .limit(3)
+    .lean();
+
+  return businesses.map(({ _id, ...rest }) => ({
+    id: (_id as string).toString(),
+    ...rest
+  }));
+}
+
 // Get businesses by category
 export async function getBusinessesByCategory(category: string) {
   const businesses = await BusinessModel.find({ category }).sort({ updatedAt: -1 }).limit(100).lean();
