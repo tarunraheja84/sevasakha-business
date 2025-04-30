@@ -118,7 +118,11 @@ export async function getBusinessesByCategory(category: string) {
 // Get all categories
 export async function getAllCategories() {
   const categories = await BusinessModel.distinct('category');
-  return categories;
+
+  const withoutOthers = categories.filter(cat => cat !== 'Others / Miscellaneous');
+  const hasOthers = categories.includes('Others / Miscellaneous');
+
+  return hasOthers ? [...withoutOthers, 'Others / Miscellaneous'] : withoutOthers;
 }
 
 // Get a business by ID

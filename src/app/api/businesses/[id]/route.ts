@@ -44,29 +44,20 @@ export async function PUT(
     const contactNo = formData.get('contactNo')!.toString();
     const googleLocation = formData.get('googleLocation')!.toString();
     const description = formData.get('description')!.toString();
-    const images = formData.getAll('images') as File[];
-    const videos = formData.getAll('videos') as File[];
-
-    // Fetch the existing business
-    const business = await getBusinessById(id);
-    if (!business) {
-      return NextResponse.json(
-        { error: 'Business not found' },
-        { status: 404 }
-      );
-    }
+    const images = formData.getAll('imageUrls') as File[];
+    const videos = formData.getAll('videoUrls') as File[];
 
     // Prepare updated business data
     const updatedBusinessData = {
-      profilePhoto: profilePhoto || business.profilePhoto,
-      businessName: businessName || business.businessName,
-      category: category || business.category,
-      address: address || business.address,
-      contactNo: contactNo || business.contactNo,
-      googleLocation: googleLocation || business.googleLocation,
-      description: description || business.description,
-      images: images.length > 0 ? images : business.images,
-      videos: videos.length > 0 ? videos : business.videos,
+      profilePhoto: profilePhoto,
+      businessName: businessName,
+      category: category,
+      address: address,
+      contactNo: contactNo,
+      googleLocation: googleLocation,
+      description: description,
+      images: images,
+      videos: videos,
     };
 
     // Update the business with the new data
