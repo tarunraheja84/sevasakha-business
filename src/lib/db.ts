@@ -138,42 +138,61 @@ export async function getBusinessById(id: string) {
   };
 }
 
-// Update a business
 export async function updateBusiness(
   id: string,
   updates: Partial<BusinessWithFilesFormData>
 ) {
+  const existing:any = await BusinessModel.findById(id).lean();
+  if (!existing) return null;
+
   const updatePayload: any = {
     updatedAt: new Date(),
   };
 
-  // Handle profilePhoto
+  // Profile Photo
   if (updates.profilePhoto) {
-    updatePayload.profilePhoto =
-      updates.profilePhoto instanceof File
-        ? await uploadToS3(updates.profilePhoto)
-        : updates.profilePhoto;
+    const isNewFile = updates.profilePhoto instanceof File;
+    if (isNewFile) {
+      if (existing.profilePhoto) await deleteFromS3(existing.profilePhoto);
+      updatePayload.profilePhoto = await uploadToS3(updates.profilePhoto);
+    } else {
+      updatePayload.profilePhoto = updates.profilePhoto;
+    }
   }
 
-  // Handle images
+  // Images
   if (Array.isArray(updates.images)) {
-    updatePayload.images = await Promise.all(
-      updates.images.map(item =>
-        item instanceof File ? uploadToS3(item) : item
+    const newImages = await Promise.all(
+      updates.images.map(img =>
+        img instanceof File ? uploadToS3(img) : img
       )
     );
+
+    const removedImages = existing.images.filter(
+      (url: string) => !newImages.includes(url)
+    );
+    await Promise.allSettled(removedImages.map(deleteFromS3));
+
+    updatePayload.images = newImages;
   }
 
-  // Handle videos
+  // Videos
   if (Array.isArray(updates.videos)) {
-    updatePayload.videos = await Promise.all(
-      updates.videos.map(item =>
-        item instanceof File ? uploadToS3(item) : item
+    const newVideos = await Promise.all(
+      updates.videos.map(vid =>
+        vid instanceof File ? uploadToS3(vid) : vid
       )
     );
+
+    const removedVideos = existing.videos.filter(
+      (url: string) => !newVideos.includes(url)
+    );
+    await Promise.allSettled(removedVideos.map(deleteFromS3));
+
+    updatePayload.videos = newVideos;
   }
 
-  // Other text fields
+  // Text fields
   const otherFields = [
     'businessName',
     'category',
@@ -189,10 +208,10 @@ export async function updateBusiness(
     }
   }
 
-  // Update in DB and return updated business
   await BusinessModel.findByIdAndUpdate(id, updatePayload);
   return getBusinessById(id);
 }
+
 
 
 // Delete a business

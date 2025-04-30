@@ -184,6 +184,33 @@ export default function BusinessForm({ initialData, isEditing = false }: Busines
       setIsLoading(false);
     }
   };
+
+  const handleDelete = async () => {
+    if (!initialData?.id) return;
+  
+    const confirmDelete = confirm('Are you sure you want to delete this business?');
+    if (!confirmDelete) return;
+  
+    try {
+      setIsLoading(true);
+      const res = await fetch(`/api/businesses/${initialData.id}`, {
+        method: 'DELETE',
+      });
+  
+      if (!res.ok) {
+        throw new Error('Failed to delete business');
+      }
+  
+      router.push('/businesses');
+      router.refresh();
+    } catch (err) {
+      console.error('Delete error:', err);
+      setError(err instanceof Error ? err.message : 'An unknown error occurred during delete');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  
   
   return (
     <form onSubmit={handleSubmit} className="space-y-6 max-w-3xl mx-auto">
@@ -192,6 +219,19 @@ export default function BusinessForm({ initialData, isEditing = false }: Busines
           <p className="text-red-700">{error}</p>
         </div>
       )}
+
+    {isEditing && (
+      <div className="flex justify-end pt-4">
+        <button
+          type="button"
+          onClick={handleDelete}
+          disabled={isLoading}
+          className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700"
+        >
+          {isLoading ? 'Deleting...' : 'Delete Business'}
+        </button>
+      </div>
+    )}
       
       <div className="space-y-4">
         {/* Profile Photo */}
