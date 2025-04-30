@@ -4,7 +4,6 @@ import { getAllCategories } from '@/lib/db'; // Updated import from db.ts
 export async function GET() {
   try {
     const categories = await getAllCategories();
-    console.log(categories,"categories");
     return NextResponse.json(categories);
   } catch (error) {
     console.error('Error fetching categories:', error);
